@@ -121,7 +121,26 @@ const Clients = ({ setOpen, setCurrentId, clients }) => {
       const [openSnackbar, closeSnackbar] = useSnackbar()
 
   const dispatch = useDispatch()
+
   const rows = clients
+
+  const [serchbox,setsearch]=useState("")
+
+  const [filteredCustomers,setcustomer]=useState(rows);
+
+  const search = () => {
+
+   setcustomer(rows.filter(customer =>
+      customer.name.toLowerCase().includes(serchbox.toLowerCase()) ||
+      customer.phone.includes(serchbox)
+    )
+  )
+  
+  
+
+       
+  }
+
   
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows?.length - page * rowsPerPage);
 
@@ -134,6 +153,9 @@ const Clients = ({ setOpen, setCurrentId, clients }) => {
     setPage(0);
   };
 
+  
+  
+
 
   const handleEdit = (selectedInvoice) => {
     
@@ -143,13 +165,26 @@ const Clients = ({ setOpen, setCurrentId, clients }) => {
   }
 
 
+
+
   const tableStyle = { width: 160, fontSize: 14, cursor: 'pointer', borderBottom: 'none',  padding: '8px', textAlign: 'center' }
 const headerStyle = { borderBottom: 'none', textAlign: 'center'}
 
 
   return (
     <div className={styles.pageLayout}>
+
     <Container style={{width: '85%'}}>
+      <input
+                placeholder="Search"
+                type='text'
+                onChange={(e) =>setsearch(e.target.value)}
+                value={serchbox}
+              />
+
+      <button onClick={search}>search</button>
+      
+      
         <TableContainer component={Paper} elevation={0}>
       <Table className={classes.table} aria-label="custom pagination table">
 
@@ -167,8 +202,8 @@ const headerStyle = { borderBottom: 'none', textAlign: 'center'}
 
         <TableBody>
           {(rowsPerPage > 0
-            ? rows?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-            : rows
+            ? filteredCustomers?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+            : filteredCustomers
           ).map((row, index) => (
             <TableRow key={row._id} styel={{cursor: 'pointer'}} >
               <TableCell style={{...tableStyle, width: '10px'}}>{index + 1}</TableCell>

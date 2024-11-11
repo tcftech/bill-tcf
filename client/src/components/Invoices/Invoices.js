@@ -131,9 +131,6 @@ const Invoices = () => {
     // }, [dispatch]);
 
     useEffect(() => {
-
-     
-      
       dispatch(getInvoicesByUser({ search: user?.result?.role==="admin"?"66ddbd635a9b22475848dd4d":user?.result?._id || user?.result?.googleId}));
       // eslint-disable-next-line
     },[location])
@@ -160,6 +157,19 @@ const Invoices = () => {
     setPage(0);
   };
 
+  const [serchbox,setsearch]=useState("")
+
+  const [filteredCustomers,setcustomer]=useState(rows);
+
+  const search = () => {
+
+   setcustomer(rows.filter(invoice =>
+    invoice.name.toLowerCase().includes(serchbox.toLowerCase()) ||
+    invoice.phone.includes(serchbox)
+    )
+  )    
+  }
+
 
   const editInvoice = (id) => {
     history.push(`/edit/invoice/${id}`)
@@ -169,9 +179,9 @@ const Invoices = () => {
     history.push(`/invoice/${id}`)
   }
 
-  // if(!user) {
-  //   history.push('/login')
-  // }
+  if(!user) {
+    history.push('/login')
+  }
 
 
 
@@ -200,6 +210,16 @@ const Invoices = () => {
   return (
     <div>
     <Container style={{width: '85%', paddingTop: '70px', paddingBottom: '50px', border: 'none'}} >
+
+      <input
+                  placeholder="Search"
+                  type='text'
+                  onChange={(e) =>setsearch(e.target.value)}
+                  value={serchbox}
+                />
+
+      <button onClick={search}>search</button>
+
         <TableContainer component={Paper} elevation={0}>
       <Table className={classes.table} aria-label="custom pagination table">
 
@@ -216,11 +236,12 @@ const Invoices = () => {
         </TableHead>
 
         <TableBody>
-          {(rowsPerPage > 0
-            ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-            : rows
+          {(rowsPerPage > 0 
+             ? filteredCustomers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+             : filteredCustomers
           ).map((row) => (
             <TableRow key={row._id} style={{cursor: 'pointer'}} >
+
                 <TableCell style={tableStyle} onClick={() => openInvoice(row._id)}> {row.invoiceNumber} </TableCell>
                 <TableCell  style={tableStyle} onClick={() => openInvoice(row._id)} > {row.client.name} </TableCell>
                 <TableCell style={tableStyle} onClick={() => openInvoice(row._id)} >{row.currency} {row.total? toCommas(row.total): row.total} </TableCell>

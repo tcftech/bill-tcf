@@ -57,6 +57,7 @@ useEffect(() => {
 
     return (
         <div>
+          
             <AddClient 
                 open={open} 
                 setOpen={setOpen}

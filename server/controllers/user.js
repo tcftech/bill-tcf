@@ -119,6 +119,10 @@ export const forgotPassword = (req,res)=>{
             console.log(err)
         }
         const token = buffer.toString("hex")
+
+        console.log("http://localhost:3000/reset/"+token);
+        
+
         User.findOne({email : email})
         .then(user=>{
             if(!user){
@@ -127,18 +131,18 @@ export const forgotPassword = (req,res)=>{
             user.resetToken = token
             user.expireToken = Date.now() + 3600000
             user.save().then((result)=>{
-                transporter.sendMail({
-                    to:user.email,
-                    from:"Accountill <hello@accountill.com>",
-                    subject:"Password reset request",
-                    html:`
-                    <p>You requested for password reset from Arc Invoicing application</p>
-                    <h5>Please click this <a href="https://accountill.com/reset/${token}">link</a> to reset your password</h5>
-                    <p>Link not clickable?, copy and paste the following url in your address bar.</p>
-                    <p>https://accountill.com/reset/${token}</p>
-                    <P>If this was a mistake, just ignore this email and nothing will happen.</P>
-                    `
-                })
+                // transporter.sendMail({
+                //     to:user.email,
+                //     from:"Accountill <hello@accountill.com>",
+                //     subject:"Password reset request",
+                //     html:`
+                //     <p>You requested for password reset from Arc Invoicing application</p>
+                //     <h5>Please click this <a href="https://accountill.com/reset/${token}">link</a> to reset your password</h5>
+                //     <p>Link not clickable?, copy and paste the following url in your address bar.</p>
+                //     <p>https://accountill.com/reset/${token}</p>
+                //     <P>If this was a mistake, just ignore this email and nothing will happen.</P>
+                //     `
+                // })
                 res.json({message:"check your email"})
             }).catch((err) => console.log(err))
   

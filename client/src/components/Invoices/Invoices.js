@@ -159,13 +159,18 @@ const Invoices = () => {
 
   const [serchbox,setsearch]=useState("")
 
-  const [filteredCustomers,setcustomer]=useState(rows);
+  const [filteredCustomers,setcustomer]=useState();
+
+  console.log(rows);
+
+
+  
 
   const search = () => {
 
    setcustomer(rows.filter(invoice =>
-    invoice.name.toLowerCase().includes(serchbox.toLowerCase()) ||
-    invoice.phone.includes(serchbox)
+    invoice.client.name.toLowerCase().includes(serchbox.toLowerCase()) ||
+    invoice.invoiceNumber.includes(serchbox) || invoice.client.name.includes(serchbox) || invoice.client.address.includes(serchbox)|| invoice.client.email.includes(serchbox) || invoice.client.phone.includes(serchbox) || invoice.status.includes(serchbox)
     )
   )    
   }
@@ -237,8 +242,8 @@ const Invoices = () => {
 
         <TableBody>
           {(rowsPerPage > 0 
-             ? filteredCustomers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-             : filteredCustomers
+             ?filteredCustomers? filteredCustomers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage):rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+             : filteredCustomers?filteredCustomers:rows
           ).map((row) => (
             <TableRow key={row._id} style={{cursor: 'pointer'}} >
 

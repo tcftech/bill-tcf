@@ -172,7 +172,9 @@ const Invoices = () => {
     invoice.client.name.toLowerCase().includes(serchbox.toLowerCase()) ||
     invoice.invoiceNumber.includes(serchbox) || invoice.client.name.includes(serchbox) || invoice.client.address.includes(serchbox)|| invoice.client.email.includes(serchbox) || invoice.client.phone.includes(serchbox) || invoice.status.includes(serchbox)
     )
-  )    
+  ) 
+  
+  
   }
 
 
@@ -217,13 +219,14 @@ const Invoices = () => {
     <Container style={{width: '85%', paddingTop: '70px', paddingBottom: '50px', border: 'none'}} >
 
       <input
-                  placeholder="Search"
-                  type='text'
-                  onChange={(e) =>setsearch(e.target.value)}
-                  value={serchbox}
-                />
+        placeholder="Search"
+        type='text'
+        onChange={(e) =>setsearch(e.target.value)}
+        value={serchbox}
+        className='search-box'
+      />
 
-      <button onClick={search}>search</button>
+      <button onClick={search}  className='search-btn'>search</button>
 
         <TableContainer component={Paper} elevation={0}>
       <Table className={classes.table} aria-label="custom pagination table">

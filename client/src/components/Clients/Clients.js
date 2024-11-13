@@ -176,13 +176,13 @@ const headerStyle = { borderBottom: 'none', textAlign: 'center'}
 
     <Container style={{width: '85%'}}>
       <input
-                placeholder="Search"
-                type='text'
-                onChange={(e) =>setsearch(e.target.value)}
-                value={serchbox}
-                className='search-box'
+        placeholder="Search"
+        type='text'
+        onChange={(e) =>setsearch(e.target.value)}
+        value={serchbox}
+        className='search-box'
                 
-              />
+      />
 
       <button onClick={search} className='search-btn' >search</button>
       

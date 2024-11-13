@@ -161,7 +161,7 @@ const Invoices = () => {
 
   const [filteredCustomers,setcustomer]=useState();
 
-  console.log(rows);
+ 
 
 
   

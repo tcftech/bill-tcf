@@ -180,9 +180,11 @@ const headerStyle = { borderBottom: 'none', textAlign: 'center'}
                 type='text'
                 onChange={(e) =>setsearch(e.target.value)}
                 value={serchbox}
+                className='search-box'
+                
               />
 
-      <button onClick={search}>search</button>
+      <button onClick={search} className='search-btn' >search</button>
       
       
         <TableContainer component={Paper} elevation={0}>

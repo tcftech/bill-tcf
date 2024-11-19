@@ -14,7 +14,7 @@ const Footer = () => {
     return (
         <footer>
             <div className={styles.footerText}>
-            ©Vignesh  | Made with ♥ in 🇳🇬 <span></span>
+              <span></span>
             </div>
             {user && (
             <FabButton />

@@ -58,18 +58,18 @@ app.post('/send-pdf', (req, res) => {
     pdf.create(pdfTemplate(req.body), options).toFile('invoice.pdf', (err) => {
        
           // send mail with defined transport object
-        transporter.sendMail({
-            from: ` Accountill <hello@accountill.com>`, // sender address
-            to: `${email}`, // list of receivers
-            replyTo: `${company.email}`,
-            subject: `Invoice from ${company.businessName ? company.businessName : company.name}`, // Subject line
-            text: `Invoice from ${company.businessName ? company.businessName : company.name }`, // plain text body
-            html: emailTemplate(req.body), // html body
-            attachments: [{
-                filename: 'invoice.pdf',
-                path: `${__dirname}/invoice.pdf`
-            }]
-        });
+        // transporter.sendMail({
+        //     from: ` Accountill <hello@accountill.com>`, // sender address
+        //     to: `${email}`, // list of receivers
+        //     replyTo: `${company.email}`,
+        //     subject: `Invoice from ${company.businessName ? company.businessName : company.name}`, // Subject line
+        //     text: `Invoice from ${company.businessName ? company.businessName : company.name }`, // plain text body
+        //     html: emailTemplate(req.body), // html body
+        //     attachments: [{
+        //         filename: 'invoice.pdf',
+        //         path: `${__dirname}/invoice.pdf`
+        //     }]
+        // });
 
         if(err) {
             res.send(Promise.reject());
@@ -80,13 +80,18 @@ app.post('/send-pdf', (req, res) => {
 
 
 //Problems downloading and sending invoice
+
 // npm install html-pdf -g
 // npm link html-pdf
 // npm link phantomjs-prebuilt
 
 //CREATE AND SEND PDF INVOICE
+
 app.post('/create-pdf', (req, res) => {
    
+    console.log(req.body);
+    
+
     pdf.create(pdfTemplate(req.body), {}).toFile('invoice.pdf', (err) => {
         if(err) {
             res.send(Promise.reject());
@@ -94,6 +99,8 @@ app.post('/create-pdf', (req, res) => {
         res.send(Promise.resolve());
     });
 });
+
+
 
 //SEND PDF INVOICE
 app.get('/fetch-pdf', (req, res) => {

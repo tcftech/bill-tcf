@@ -1,20 +1,24 @@
-const os = require('os');
+import nodemailer from 'nodemailer';
 
-const getLocalIPAddress = () => {
-  const networkInterfaces = os.networkInterfaces();
-  let ipAddress = '';
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'tcftestingtech@gmail.com', // Your email
+    pass: 'Tcf@638174', // App password
+  },
+});
 
-  for (let iface in networkInterfaces) {
-    networkInterfaces[iface].forEach(details => {
-      if (details.family === 'IPv4' && !details.internal) {
-        ipAddress = details.address;
-      }
-    });
-  }
-
-  return ipAddress;
+const mailOptions = {
+  from: 'tcftestingtech@gmail.com',
+  to: 'vigneshphr2002@gmail.com',
+  subject: 'Test Email',
+  text: 'This is a test email!',
 };
 
-console.log('Local IP Address:', getLocalIPAddress());
-
-
+transporter.sendMail(mailOptions, (err, info) => {
+  if (err) {
+    console.error("Error sending email:", err);
+  } else {
+    console.log('Email sent: ' + info.response);
+  }
+});

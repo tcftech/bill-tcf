@@ -131,7 +131,7 @@ const Invidual = (props) => {
     // }, [dispatch]);
 
     useEffect(() => {
-      dispatch(getInvoicesByUser({ search: user?.result?._id || user?.result?.googleId}));
+      dispatch(getInvoicesByUser({ search: user?.result?.role==="admin"?"66ddbd635a9b22475848dd4d":user?.result?._id || user?.result?.googleId}));
       // eslint-disable-next-line
     },[location])
 
@@ -206,8 +206,15 @@ const Invidual = (props) => {
             <TableCell style={headerStyle}>Amount</TableCell>
             <TableCell style={headerStyle}>Due Date</TableCell>
             <TableCell style={headerStyle}>Status</TableCell>
-            <TableCell style={headerStyle}>Edit</TableCell>
-            <TableCell style={headerStyle}>Delete</TableCell>
+          {
+             user?.result?.role==="admin" ? 
+             <TableCell style={headerStyle}>Edit</TableCell>:null
+          }
+
+          {
+              user?.result?.role==="admin" ?
+             <TableCell style={headerStyle}>Delete</TableCell>:null
+          } 
           </TableRow>
         </TableHead>
 
@@ -224,14 +231,17 @@ const Invidual = (props) => {
                 <TableCell style={tableStyle} onClick={() => openInvoice(row._id)} > <button style={checkStatus(row.status)}>{props.extra?props.extra:row.status}</button></TableCell>
              
                 <TableCell style={{...tableStyle, width: '10px'}}>
-                  <IconButton onClick={() => editInvoice(row._id)}>
+                  {
+                    user?.result?.role==="admin"? <IconButton onClick={() => editInvoice(row._id)}>
                     <BorderColorIcon  style={{width: '20px', height: '20px'}} />
-                  </IconButton>
+                  </IconButton>:null
+                  }
+                 
               </TableCell>
               <TableCell style={{...tableStyle, width: '10px'}}>
-                  <IconButton onClick={() => dispatch(deleteInvoice(row._id, openSnackbar))}>
+              { user?.result?.role==="admin"? <IconButton onClick={() => dispatch(deleteInvoice(row._id, openSnackbar))}>
                     <DeleteOutlineRoundedIcon  style={{width: '20px', height: '20px'}} />
-                  </IconButton>
+                  </IconButton>:null}
               </TableCell>
             </TableRow>
           ))}

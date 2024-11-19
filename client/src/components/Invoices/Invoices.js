@@ -238,8 +238,18 @@ const Invoices = () => {
             <TableCell style={headerStyle}>Amount</TableCell>
             <TableCell style={headerStyle}>Due Date</TableCell>
             <TableCell style={headerStyle}>Status</TableCell>
-            <TableCell style={headerStyle}>Edit</TableCell>
-            <TableCell style={headerStyle}>Delete</TableCell>
+          {
+             user?.result?.role==="admin" ? 
+             <TableCell style={headerStyle}>Edit</TableCell>:null
+          }
+
+          {
+              user?.result?.role==="admin" ?
+             <TableCell style={headerStyle}>Delete</TableCell>:null
+          } 
+          
+            
+            
           </TableRow>
         </TableHead>
 
@@ -257,9 +267,11 @@ const Invoices = () => {
                 <TableCell style={tableStyle} onClick={() => openInvoice(row._id)} > <button style={checkStatus(row.status)}>{row.status}</button></TableCell>
              
                 <TableCell style={{...tableStyle, width: '10px'}}>
-                  <IconButton onClick={() => editInvoice(row._id)}>
+                  {
+                   user?.result?.role==="admin"? <IconButton onClick={() => editInvoice(row._id)}>
                     <BorderColorIcon  style={{width: '20px', height: '20px'}} />
-                  </IconButton>
+                  </IconButton>:null
+                  }
               </TableCell>
               <TableCell style={{...tableStyle, width: '10px'}}>
                  { user?.result?.role==="admin"? <IconButton onClick={() => dispatch(deleteInvoice(row._id, openSnackbar))}>

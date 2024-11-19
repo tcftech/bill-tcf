@@ -23,6 +23,8 @@ import DeleteOutlineRoundedIcon from '@material-ui/icons/DeleteOutlineRounded';
 import BorderColorIcon from '@material-ui/icons/BorderColor';
 import { useLocation } from 'react-router-dom';
 
+import { saveAs } from 'file-saver';
+
 import { deleteInvoice, getInvoicesByUser } from '../../actions/invoiceActions';
 import NoData from '../svgIcons/NoData';
 import Spinner from '../Spinner/Spinner'
@@ -185,6 +187,29 @@ const Invoices = () => {
   const openInvoice = (id) => {
     history.push(`/invoice/${id}`)
   }
+
+
+
+  
+
+const createAndDownloadExcel = () => {
+  setDownloadStatus('loading');
+
+  axios.get(`${REACT_APP_API.baseURL}/fetch-excel`, )
+    .then((res) => {
+      // Handle the Excel download
+      const excelBlob = new Blob([res.data], {
+        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      });
+      saveAs(excelBlob, 'invoice.xlsx');
+    })
+    .then(() => setDownloadStatus('success'))
+    .catch((err) => {
+      console.error('Error downloading Excel:', err);
+      setDownloadStatus('error');
+    });
+};
+
 
   if(!user) {
     history.push('/login')

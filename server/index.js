@@ -104,8 +104,16 @@ app.post('/create-pdf', (req, res) => {
 
 //SEND PDF INVOICE
 app.get('/fetch-pdf', (req, res) => {
-     res.sendFile(`${__dirname}/invoice.pdf`)
+     res.sendFile(`${__dirname}/JsontoExcell/excellreport.xlsx`)
 })
+
+
+//SEND PDF Excell Report
+app.get('/fetch-excel', (req, res) => {
+    res.sendFile(`${__dirname}/invoice.pdf`)
+})
+
+
 
 
 app.get('/', (req, res) => {
